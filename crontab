@@ -1,0 +1,29 @@
+#backup mikrotik router twice a day
+00 09 * * * /home/didik/backup-mikrotik.sh
+00 13 * * * /home/didik/backup-mikrotik.sh
+
+#backup fortigate
+00 11 * * * /home/didik/backup-fortigate.sh
+
+#backup fileserver on monday-friday daily
+20 17 * * 1 /home/didik/backup-full.daily.sh
+20 17 * * 2 /home/didik/backup-full.daily.sh
+20 17 * * 3 /home/didik/backup-full.daily.sh
+20 13 * * 3 /home/didik/backup-exthdd.sh
+20 17 * * 4 /home/didik/backup-full.daily.sh
+20 17 * * 5 /home/didik/backup-full.daily.sh
+
+#backup fileserver on saturday weekly except on first week of the month do monthly backup
+10 17 01-07 * * /usr/bin/test "$(date '+\%a')" == "Sat" && /home/didik/backup-full.monthly.sh
+10 17 08-14 * * /usr/bin/test "$(date '+\%a')" == "Sat" && /home/didik/backup-full.weekly.sh
+10 17 15-21 * * /usr/bin/test "$(date '+\%a')" == "Sat" && /home/didik/backup-full.weekly.sh
+10 17 22-28 * * /usr/bin/test "$(date '+\%a')" == "Sat" && /home/didik/backup-full.weekly.sh
+10 17 29-31 * * /usr/bin/test "$(date '+\%a')" == "Sat" && /home/didik/backup-full.weekly.sh
+
+#disable wol server on sunday except on last sunday of the month
+00 13 * * 6 /home/didik/wolserver_sun_up.sh
+00 13 * * 0 /home/didik/wolserver_sun_down.sh
+
+#batch download backup_psho from google drive
+00 17 * * 1 rm -rf /home/didik/backup/folder*
+30 17 * * 1 /home/didik/backup/gdrive_download.sh
