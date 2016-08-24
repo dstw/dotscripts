@@ -37,12 +37,16 @@ Automatic mikrotik device configuration backup using ssh & sftp
 
 ### gdrive-download.sh
 Script to download google drive files/folders use 3rd party "gdrive"
-application.  
+application
+
 Go to [gdrive](https://github.com/prasmussen/gdrive) and choose your platform.  
 Edit gdrive-download.sh, specify your $gdrive_home, and put gdrive app here.  
-Create url.txt, to store google drive fileid.
+Create url.txt, to store google drive fileid.  
+	
 	touch url.txt
-Test and initialize:
+
+Test and initialize:  
+	
 	$ /path/to/gdrive_home/gdrive download 0B-yXnTjUyJusiInZjRUJjcW1OMVE --path /path/to/gdrive_home --recursive
 	Authentication needed
 	Go to the following url in your browser:
@@ -50,8 +54,10 @@ Test and initialize:
 
 	Enter verification code: 4svvfHm0_CMRlskdfjKckIGRPUCxBvb7wItnwtubfClyuw
 	Downloading file.bak -> /path/to/gdrive_home/file.bak
+
 For first use, it will need google authentication, just do as the instructions.  
 Once download succeeded, you can install new crontab to automating this task.
+	
 	# batch download from google drive
 	# download every monday on 17:30
 	00 17 * * 1 rm -rf /path/to/gdrive_home/28*
