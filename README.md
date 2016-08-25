@@ -1,7 +1,7 @@
-# conf-serv
+# Scripts
 
-My collections of various shell script with various functionality such as
-file backup, automatic download and control other servers. 
+My collections of various shell script and config file with various
+functionality such as file backup, automatic download and control other servers. 
 
 General Requirements
 --------------------
@@ -14,8 +14,8 @@ General Requirements
 Description and Usage
 ---------------------
 
-	git clone git@github.com:dstw/conf-serv.git
-	cd conf-serv
+	git clone git@github.com:dstw/scripts.git
+	cd scripts/
 	cp * ~/
 	cd ~
 	cat crontab | crontab -
