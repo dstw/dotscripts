@@ -71,3 +71,12 @@ Wake up server on last sunday of the month via mikrotik script
 
 ### wolserver-sun-up.sh
 Disable wake up server on every week via mikrotik script
+
+### update-repo.sh
+Organize public repositories I follow. It lists, receives and sends updates to
+my forking repository
+
+Usage:
+
+	ln -s update-repo.sh ~/update-repo.sh
+	~/update-repo.sh
