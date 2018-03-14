@@ -10,7 +10,7 @@ folder_github=(
 	"ccextractor.git"
 	"certbot"
 	"cmus"
-	"coala"
+	"coala.git"
 	"curl"
 	"dircolors-solarized"
 	"everything-curl"
@@ -19,6 +19,7 @@ folder_github=(
 	"git"
 	"gitignore"
 	"h2o"
+	"irssi"
 	"libmicrohttpd"
 	"libpsl"
 	"libreswan"
@@ -30,6 +31,7 @@ folder_github=(
 	"offlineimap.git"
 	"oh-my-zsh"
 	"powerline"
+	"ranger.git"
 	"rspamd"
 	"scancode-toolkit"
 	"sl"
@@ -37,9 +39,11 @@ folder_github=(
 	"speed-test"
 	"squid"
 	"strace"
-	"tldr"
+	"systemd"
+	"tldr.git"
 	"tmux"
 	"todo.txt-cli"
+	"urlview.git"
 	"vibreoffice"
 	"vifm"
 	"vim"
@@ -49,25 +53,27 @@ folder_github=(
 	"zsh-autosuggestions"
 	"zsh-completions"
 	"zzuf"
-
-#### Others ###
-#	"gnulib"
-#	"iptables"
-#	"libnftnl"
-#	"libunistring"
-#	"linux-kernel"
-#	"nftables"
-#	"postgresql.git"
-#	"readline"
 )
 
 folder_gitlab=(
-#### Gitlab ###
+### Gitlab ###
 	"gnutls"
 	"libidn2"
 	"libmicrohttpd"
 	"wget"
 	"wget2"
+)
+
+folder_others=(
+### Others ###
+	"gnulib"
+	"iptables"
+	"libnftnl"
+	"libunistring"
+	"linux-kernel"
+	"nftables"
+	"postgresql.git"
+	"readline"
 )
 
 folder_hg=(
@@ -79,12 +85,13 @@ github_count=${#folder_github[@]}
 
 for i in $(seq 0 $((github_count-1)))
 do
-	if [ ${folder_github[$i]} == "oh-my-zsh" ]
-	then
-		continue
-	fi
 	echo "Processing ${folder_github[$i]}"
 	cd $HOME/${folder_github[$i]}
+	branch_name=$(git branch | grep \* | awk '{print $2}')
+	if [ $branch_name != "master" ]
+	then
+		git checkout master
+	fi
 	git fetch origin
 	git merge origin/master
 	if $(git remote show | grep github > /dev/null)
@@ -100,6 +107,10 @@ do
 		fi
 		git push github master
 	fi
+	if [ $branch_name != "master" ]
+	then
+		git checkout $branch_name
+	fi
 done
 
 gitlab_count=${#folder_gitlab[@]}
@@ -108,6 +119,11 @@ for i in $(seq 0 $((gitlab_count-1)))
 do
 	echo "Processing ${folder_gitlab[$i]}"
 	cd $HOME/${folder_gitlab[$i]}
+	branch_name=$(git branch | grep \* | awk '{print $2}')
+	if [ $branch_name != "master" ]
+	then
+		git checkout master
+	fi
 	git fetch origin
 	git merge origin/master
 	if $(git remote show | grep gitlab > /dev/null)
@@ -122,6 +138,10 @@ do
 			git remote add gitlab git@gitlab.com:dstw/${folder_gitlab[i]}
 		fi
 		git push gitlab master
+	fi
+	if [ $branch_name != "master" ]
+	then
+		git checkout $branch_name
 	fi
 done
 
